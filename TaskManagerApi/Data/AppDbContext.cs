@@ -5,5 +5,38 @@ namespace TaskManagerApi.Data;
 
 public class AppDbContext : DbContext
 {
-    
+    public AppDbContext(DbContextOptions<AppDbContext> options) : base(options){}
+    public DbSet<Colaborador> Colaboradores { get; set; }
+    public DbSet<Tarefa> Tarefas { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Colaborador>().HasData(
+            new Colaborador { Id = 1, Nome = "Pam", Email = "pam@example.com", Senha = "senha123" },
+            new Colaborador { Id = 2, Nome = "Jim", Email = "jim@example.com", Senha = "senha456" },
+            new Colaborador { Id = 3, Nome = "Kevin", Email = "kevin@example.com", Senha = "senha789" },
+            new Colaborador { Id = 4, Nome = "Kelly", Email = "kelly@example.com", Senha = "senha012" },
+            new Colaborador { Id = 5, Nome = "Dwight", Email = "dwight@example.com", Senha = "senha345" },
+            new Colaborador { Id = 6, Nome = "Michael", Email = "michael@example.com", Senha = "senha678" },
+            new Colaborador { Id = 7, Nome = "Angela", Email = "angela@example.com", Senha = "senha901" },
+            new Colaborador { Id = 8, Nome = "Stanley", Email = "stanley@example.com", Senha = "senha234" },
+            new Colaborador { Id = 9, Nome = "Oscar", Email = "oscar@example.com", Senha = "senha567" },
+            new Colaborador { Id = 10, Nome = "Phyllis", Email = "phyllis@example.com", Senha = "senha890" }
+        );
+
+        modelBuilder.Entity<Tarefa>().HasData(
+            new Tarefa { Id = 1, Titulo = "Alimentar o cachorro", Descricao = "Descrição da tarefa 1", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 1 },
+            new Tarefa { Id = 2, Titulo = "Fazer compras", Descricao = "Descrição da tarefa 2", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 2 },
+            new Tarefa { Id = 3, Titulo = "Ir à padaria", Descricao = "Descrição da tarefa 3", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 3 },
+            new Tarefa { Id = 4, Titulo = "Ir à feira", Descricao = "Descrição da tarefa 4", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 4 },
+            new Tarefa { Id = 5, Titulo = "Comprar itens de festa", Descricao = "Descrição da tarefa 5", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 5 },
+            new Tarefa { Id = 6, Titulo = "Contratar palhaço", Descricao = "Descrição da tarefa 6", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 6 },
+            new Tarefa { Id = 7, Titulo = "Limpar o escritório", Descricao = "Descrição da tarefa 7", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 7 },
+            new Tarefa { Id = 8, Titulo = "Preparar a festa", Descricao = "Descrição da tarefa 8", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 8 },
+            new Tarefa { Id = 9, Titulo = "Preparar comida", Descricao = "Descrição da tarefa 9", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 1 },
+            new Tarefa { Id = 10, Titulo = "Preparar decoração", Descricao = "Descrição da tarefa 10", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 2 },
+            new Tarefa { Id = 11, Titulo = "Comer", Descricao = "Descrição da tarefa 11", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 3 },
+            new Tarefa { Id = 12, Titulo = "Fofocar", Descricao = "Descrição da tarefa 12", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 4 }
+        );
+    }
 }

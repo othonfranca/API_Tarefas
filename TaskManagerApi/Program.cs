@@ -1,8 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Data;
 using TaskManagerApi.Services;
-using TaskManagerApi.Enum;
+using TaskManagerApi.Enums;
 using TaskManagerApi.Models;
+using TaskManagerApi.Middleware;
 using System.Text;
 using FluentValidation;
 using Scalar.AspNetCore;
@@ -53,6 +54,10 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+//Midlewares
+app.UseMiddleware<ExceptionMiddleware>();
+
 
 app.UseAuthentication(); // quem é o usuário?
 app.UseAuthorization(); // o que o usuário pode acessar?

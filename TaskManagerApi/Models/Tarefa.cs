@@ -1,4 +1,4 @@
-using TaskManagerApi.Enum;
+using TaskManagerApi.Enums;
 
 namespace TaskManagerApi.Models;
 
@@ -11,4 +11,5 @@ public class Tarefa
     public StatusTarefa Status {get;set;} = StatusTarefa.Pendente;
     public int ColaboradorId {get;set;} // chave estrangeira para Colaborador
     public Colaborador? Colaborador {get;set;} // propriedade de navegação para Colaborador
+    public DateTime? DataAtualizacao { get; set; } // O '?' permite nulo no banco
 }

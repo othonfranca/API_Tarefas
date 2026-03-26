@@ -26,18 +26,18 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Tarefa>().HasData(
             // Exemplo com uma data fixa para o pessoal da Dunder Mifflin
-            new Tarefa { Id = 1, Titulo = "Alimentar o cachorro", DataCriacao = new DateTime(2026, 3, 25), Descricao = "Descrição da tarefa 1",Status = Enum.StatusTarefa.Pendente, ColaboradorId = 1 },
-            new Tarefa { Id = 2, Titulo = "Fazer compras", DataCriacao = new DateTime(2026, 3, 26), Descricao = "Descrição da tarefa 2", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 2 },
-            new Tarefa { Id = 3, Titulo = "Ir à padaria", DataCriacao = new DateTime(2026, 3, 27), Descricao = "Descrição da tarefa 3", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 3 },
-            new Tarefa { Id = 4, Titulo = "Ir à feira", DataCriacao = new DateTime(2026, 3, 28), Descricao = "Descrição da tarefa 4", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 4 },
-            new Tarefa { Id = 5, Titulo = "Comprar itens de festa", DataCriacao = new DateTime(2026, 3, 29), Descricao = "Descrição da tarefa 5", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 5 },
-            new Tarefa { Id = 6, Titulo = "Contratar palhaço", DataCriacao = new DateTime(2026, 3, 30), Descricao = "Descrição da tarefa 6", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 6 },
-            new Tarefa { Id = 7, Titulo = "Limpar o escritório", DataCriacao = new DateTime(2026, 3, 31), Descricao = "Descrição da tarefa 7", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 7 },
-            new Tarefa { Id = 8, Titulo = "Preparar a festa", DataCriacao = new DateTime(2026, 4, 1), Descricao = "Descrição da tarefa 8", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 8 },
-            new Tarefa { Id = 9, Titulo = "Preparar comida", DataCriacao = new DateTime(2026, 4, 2), Descricao = "Descrição da tarefa 9", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 1 },
-            new Tarefa { Id = 10, Titulo = "Preparar decoração", DataCriacao = new DateTime(2026, 4, 3), Descricao = "Descrição da tarefa 10", Status = Enum.StatusTarefa.Pendente, ColaboradorId = 2 },
-            new Tarefa { Id = 11, Titulo = "Comer", DataCriacao = new DateTime(2026, 4, 4), Descricao = "Descrição da tarefa 11", Status = Enum.StatusTarefa.EmAndamento, ColaboradorId = 3},
-            new Tarefa { Id = 12, Titulo = "Fofocar", DataCriacao = new DateTime(2026, 4, 5), Descricao = "Descrição da tarefa 12", Status = Enum.StatusTarefa.Concluida, ColaboradorId = 4 }
+            new Tarefa { Id = 1, Titulo = "Alimentar o cachorro", DataCriacao = new DateTime(2026, 3, 25), Descricao = "Descrição da tarefa 1",Status = Enums.StatusTarefa.Pendente, ColaboradorId = 1 },
+            new Tarefa { Id = 2, Titulo = "Fazer compras", DataCriacao = new DateTime(2026, 3, 26), Descricao = "Descrição da tarefa 2", Status = Enums.StatusTarefa.EmAndamento, ColaboradorId = 2 },
+            new Tarefa { Id = 3, Titulo = "Ir à padaria", DataCriacao = new DateTime(2026, 3, 27), Descricao = "Descrição da tarefa 3", Status = Enums.StatusTarefa.Concluida, ColaboradorId = 3 },
+            new Tarefa { Id = 4, Titulo = "Ir à feira", DataCriacao = new DateTime(2026, 3, 28), Descricao = "Descrição da tarefa 4", Status = Enums.StatusTarefa.Pendente, ColaboradorId = 4 },
+            new Tarefa { Id = 5, Titulo = "Comprar itens de festa", DataCriacao = new DateTime(2026, 3, 29), Descricao = "Descrição da tarefa 5", Status = Enums.StatusTarefa.EmAndamento, ColaboradorId = 5 },
+            new Tarefa { Id = 6, Titulo = "Contratar palhaço", DataCriacao = new DateTime(2026, 3, 30), Descricao = "Descrição da tarefa 6", Status = Enums.StatusTarefa.Concluida, ColaboradorId = 6 },
+            new Tarefa { Id = 7, Titulo = "Limpar o escritório", DataCriacao = new DateTime(2026, 3, 31), Descricao = "Descrição da tarefa 7", Status = Enums.StatusTarefa.Pendente, ColaboradorId = 7 },
+            new Tarefa { Id = 8, Titulo = "Preparar a festa", DataCriacao = new DateTime(2026, 4, 1), Descricao = "Descrição da tarefa 8", Status = Enums.StatusTarefa.EmAndamento, ColaboradorId = 8 },
+            new Tarefa { Id = 9, Titulo = "Preparar comida", DataCriacao = new DateTime(2026, 4, 2), Descricao = "Descrição da tarefa 9", Status = Enums.StatusTarefa.Concluida, ColaboradorId = 1 },
+            new Tarefa { Id = 10, Titulo = "Preparar decoração", DataCriacao = new DateTime(2026, 4, 3), Descricao = "Descrição da tarefa 10", Status = Enums.StatusTarefa.Pendente, ColaboradorId = 2 },
+            new Tarefa { Id = 11, Titulo = "Comer", DataCriacao = new DateTime(2026, 4, 4), Descricao = "Descrição da tarefa 11", Status = Enums.StatusTarefa.EmAndamento, ColaboradorId = 3},
+            new Tarefa { Id = 12, Titulo = "Fofocar", DataCriacao = new DateTime(2026, 4, 5), Descricao = "Descrição da tarefa 12", Status = Enums.StatusTarefa.Concluida, ColaboradorId = 4 }
         );
     }
 }

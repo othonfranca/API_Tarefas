@@ -1,4 +1,4 @@
-namespace TaskManagerApi.Enum;
+namespace TaskManagerApi.Enums;
     public enum StatusTarefa
     {
         Pendente = 0,

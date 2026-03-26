@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.StaticAssets;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -26,7 +27,7 @@ public class TarefaController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> ListarMinhasTarefas([FromQuery] string? status)
+    public async Task<IActionResult> ListarMinhasTarefas([FromQuery] string? status, [FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
         // Autenticação
         var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -35,6 +36,7 @@ public class TarefaController : ControllerBase
 
         // Cria consulta Query, mas ainda não bate no banco
         var query = _context.Tarefas
+            .AsNoTracking()
             .Where(t => t.ColaboradorId == colaboradorId)
             .AsQueryable();
 
@@ -51,10 +53,12 @@ public class TarefaController : ControllerBase
             }
         }
 
-        query = query.OrderByDescending(t => t.DataCriacao);
+        var totalRegistros = await query.CountAsync();
 
         // O FILTRO: só trazer o que pertence ao coloborador
         var tarefas = await query
+            .Skip((pagina - 1) * tamanho)
+            .Take(tamanho)
             .Select(t => new TarefaResponse
             {
                 Id = t.Id,
@@ -66,7 +70,50 @@ public class TarefaController : ControllerBase
             })
             .ToListAsync();
 
-        return Ok(tarefas);
+        var response = new PaginatedResponse<TarefaResponse>
+        {
+            PaginaAtual = pagina,
+            ItensPorPagina = tamanho,
+            TotalRegistros = totalRegistros,
+            Dados = tarefas
+        };
+
+        return Ok(response);
+    }
+
+    [HttpGet("dashboard")]
+    public async Task<IActionResult> GetDashboard()
+    {
+        var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+        if(userIdClaim == null) return Unauthorized();
+        var colaboradorId = int.Parse(userIdClaim.Value);
+
+        var stats = await _context.Tarefas
+            .Where(t => t.ColaboradorId == colaboradorId)
+            .GroupBy(t => 1) //agrupa tudo em um unico bloco
+            .Select(g => new
+            {
+                Total = g.Count(),
+                Concluidas = g.Count(t => t.Status == StatusTarefa.Concluido),
+                EmAndamento = g.Count(t => t.Status == StatusTarefa.EmAndamento),
+                Pendente = g.Count(t => t.Status == StatusTarefa.Pendente)
+            })
+            .FirstOrDefaultAsync();
+
+        if (stats == null)
+        {
+            return Ok(new DashboardResponse()); // Retorna tudo zerado (padrão do DTO)
+        }
+
+        var response = new DashboardResponse
+        {
+            TotalTarefas = stats.Total,
+            TarefasConcluidas = stats.Concluidas,
+            TarefasEmAndamento = stats.EmAndamento,
+            TarefasPendentes = stats.Pendente
+        };
+
+        return Ok(response);
     }
 
     [HttpPost]

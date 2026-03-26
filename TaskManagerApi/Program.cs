@@ -1,13 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Data;
 using TaskManagerApi.Services;
-using TaskManagerApi.Enums;
-using TaskManagerApi.Models;
 using TaskManagerApi.Middleware;
 using System.Text;
-using FluentValidation;
 using Scalar.AspNetCore;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text.Json.Serialization;
@@ -17,6 +13,12 @@ var builder = WebApplication.CreateBuilder(args);
 var secretKey = builder.Configuration["JwtSettings:SecretKey"]
     ?? throw new InvalidOperationException("A chave secreta para JWT não foi configurada.");
 var key = Encoding.ASCII.GetBytes(secretKey);
+
+builder.Services.AddOpenApi(options =>
+{
+    // Adicionamos o transformador que criamos para o "Cadeado"
+    options.AddDocumentTransformer<SecurityTransformer>();
+});
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -57,6 +59,19 @@ var app = builder.Build();
 
 //Midlewares
 app.UseMiddleware<ExceptionMiddleware>();
+
+//Interface da API
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi(); // Gera o JSON do contrato
+    app.MapScalarApiReference(options =>
+    {
+        options
+        .WithTitle("Task Manager API")
+        .WithTheme(ScalarTheme.DeepSpace)
+        .WithDefaultHttpClient(ScalarTarget.CSharp, ScalarClient.HttpClient);
+    }); // Interface moderna em /scalar/v1
+}
 
 
 app.UseAuthentication(); // quem é o usuário?

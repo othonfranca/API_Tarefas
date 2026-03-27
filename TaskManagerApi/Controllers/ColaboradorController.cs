@@ -5,8 +5,6 @@ using TaskManagerApi.Data;
 using TaskManagerApi.DTOs;
 using TaskManagerApi.Models;
 using System.Security.Claims;
-using TaskManagerApi.Enums;
-using TaskManagerApi.Validators;
 
 
 namespace TaskManagerApi.Controllers;
@@ -72,7 +70,7 @@ public class ColaboradorController : ControllerBase
         return CreatedAtAction(nameof(ListarColaboradores), new {id = colaborador.Id}, response);
     }
 
-    [HttpPut("{id}/editarColab")]
+    [HttpPatch("{id}/editarColab")]
     public async Task<ActionResult<ColaboradorResponse>> AlterarColaborador([FromRoute]int id, [FromBody] ColaboradorUpdateRequest dto)
     {
         // authentication

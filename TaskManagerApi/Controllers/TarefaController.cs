@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.StaticAssets;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TaskManagerApi.Data;

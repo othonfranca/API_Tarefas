@@ -28,7 +28,7 @@ public class ColaboradorController : ControllerBase
             .AsNoTracking()
             .AsQueryable();
 
-        // 2. FILTRO: Se veio um nome, filtramos PRIMEIRO
+        // FILTRO: Se veio um nome, filtramos PRIMEIRO
         if (!string.IsNullOrWhiteSpace(nome))
         {
             query = query.Where(c => c.Nome.Contains(nome));

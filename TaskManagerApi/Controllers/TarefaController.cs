@@ -1,8 +1,5 @@
-using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Routing;
-using Microsoft.AspNetCore.StaticAssets;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using TaskManagerApi.Data;
@@ -109,7 +106,9 @@ public class TarefaController : ControllerBase
         {
             TotalTarefas = stats.Total,
             TarefasConcluidas = stats.Concluidas,
+            PorcentagemConcluido = stats.Total > 0 ? Math.Round((double)stats.Concluidas / stats.Total * 100, 2) : 0,
             TarefasEmAndamento = stats.EmAndamento,
+            PorcentagemEmAndamento = stats.Total > 0 ? Math.Round((double)stats.EmAndamento / stats.Total * 100, 2) : 0,
             TarefasPendentes = stats.Pendente
         };
 

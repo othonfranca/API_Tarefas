@@ -52,9 +52,11 @@ public class TarefaController : ControllerBase
 
         var totalRegistros = await query.CountAsync();
 
+        var skip = (pagina - 1) * tamanho;
+
         // O FILTRO: só trazer o que pertence ao coloborador
         var tarefas = await query
-            .Skip((pagina - 1) * tamanho)
+            .Skip(skip)
             .Take(tamanho)
             .Select(t => new TarefaResponse
             {
@@ -97,10 +99,7 @@ public class TarefaController : ControllerBase
             })
             .FirstOrDefaultAsync();
 
-        if (stats == null)
-        {
-            return Ok(new DashboardResponse()); // Retorna tudo zerado (padrão do DTO)
-        }
+        if (stats == null) return Ok(new DashboardResponse()); // Retorna tudo zerado (padrão do DTO)
 
         var response = new DashboardResponse
         {

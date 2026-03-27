@@ -25,7 +25,7 @@ public class ColaboradorController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ColaboradorController>>> ListarColaboradores([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
-        var skip = ((pagina - 1) * tamanho);
+        var skip = (pagina - 1) * tamanho;
 
         var colaboradores = await _context.Colaboradores
             .AsNoTracking()
@@ -90,7 +90,7 @@ public class ColaboradorController : ControllerBase
 
         return Ok(response);
     }
-    
+
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeletarColaborador([FromRoute]int id)
     {

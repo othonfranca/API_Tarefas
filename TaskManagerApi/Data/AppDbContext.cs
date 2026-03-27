@@ -11,6 +11,13 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        // Lógica para, se deletar um colaborador, deletar tbm as tarefas vinculadas a ele automaticamente
+        modelBuilder.Entity<Tarefa>()
+            .HasOne(t => t.Colaborador)
+            .WithMany(c => c.Tarefas)
+            .HasForeignKey(t => t.ColaboradorId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         modelBuilder.Entity<Colaborador>().HasData(
             new Colaborador { Id = 1, Nome = "Pam", Email = "pam@example.com", Senha = "senha123" },
             new Colaborador { Id = 2, Nome = "Jim", Email = "jim@example.com", Senha = "senha456" },

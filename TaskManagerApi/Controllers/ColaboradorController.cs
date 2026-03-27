@@ -3,10 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Data;
 using TaskManagerApi.DTOs;
-using TaskManagerApi.Enums;
 using TaskManagerApi.Models;
-using TaskManagerApi.Validators;
 using System.Security.Claims;
+using TaskManagerApi.Enums;
+using TaskManagerApi.Validators;
+
 
 namespace TaskManagerApi.Controllers;
 
@@ -23,12 +24,21 @@ public class ColaboradorController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<ColaboradorController>>> ListarColaboradores([FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
+    public async Task<ActionResult<IEnumerable<ColaboradorResponse>>> ListarColaboradores([FromQuery] string? nome, [FromQuery] int pagina = 1, [FromQuery] int tamanho = 10)
     {
+        var query = _context.Colaboradores
+            .AsNoTracking()
+            .AsQueryable();
+
+        // 2. FILTRO: Se veio um nome, filtramos PRIMEIRO
+        if (!string.IsNullOrWhiteSpace(nome))
+        {
+            query = query.Where(c => c.Nome.Contains(nome));
+        }
+        
         var skip = (pagina - 1) * tamanho;
 
         var colaboradores = await _context.Colaboradores
-            .AsNoTracking()
             .OrderBy(c => c.Nome)
             .Skip(skip)
             .Take(tamanho)
